@@ -1,0 +1,15 @@
+.demo{
+	width: 1000px;
+	margin: 200px auto 0;
+	color: gray;
+	text-align:center;
+	.img-wraper{
+		margin:20px auto;
+		img{
+			width:60px;
+			height:80px;
+			margin:0 3px;
+			border-radius :5px;
+		}
+	}
+}

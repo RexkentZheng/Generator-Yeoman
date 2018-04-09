@@ -1,0 +1,18 @@
+{
+  "env": {
+    "es6": true,
+    "browser": true,
+    "commonjs": true
+  },
+  "parser": "babel-eslint",
+  "extends": "airbnb",
+  "rules": {
+    //不允许以下划线命名变量或者函数，如果有特殊情况请在下面加上变量名或函数名
+    "no-underscore-dangle": ["error", {
+      "allow": [
+      ]
+    }],
+    // 后缀可以是js或者是jsx
+    "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }],
+  }
+}
