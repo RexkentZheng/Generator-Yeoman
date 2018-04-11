@@ -63,7 +63,7 @@ var Reactpackage = yeoman.Base.extend({
 					this.destinationPath(`${this.props.name}/.eslintignore`),
 				);
 				this.fs.copyTpl(
-					this.templatePath('./.gitignore'),
+					this.templatePath('./_.gitignore'),
 					this.destinationPath(`${this.props.name}/.gitignore`),
 				);
 				this.fs.copyTpl(
