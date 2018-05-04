@@ -2,11 +2,14 @@ const webpack = require('webpack');
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const OptimizeCSSPlugin = require('optimize-css-assets-webpack-plugin');
+
+const env = process.env.NODE_ENV || 'production';
 
 module.exports = {
-	mode: "development", //声明开发者模式
+	mode: env,
 
-	devtool: 'eval-source-map',
+	devtool: env === 'production' ? false : 'cheap-module-eval-source-map',
 
 	entry: {
 		app: './src/app.js',
@@ -24,8 +27,35 @@ module.exports = {
 		port: <%= port %>
 	},
 
+	resolve: {
+		modules: [
+      __dirname + "/node_modules/"
+    ],
+		extensions: ['.js', '.jsx', '.json', '.scss'],
+		alias: {
+			src: path.resolve(__dirname, 'src/')
+		},
+	},
+
 	optimization: {
 		minimize: true, //压缩js文件的组件，在4.0以上版本已被集成到webpack本身，所以直接填写参数即可
+		runtimeChunk: false,
+		splitChunks: {
+			chunks: 'async',
+      minSize: 30000,
+      minChunks: 1,
+      maxAsyncRequests: 5,
+      maxInitialRequests: 3,
+      name: false,
+      cacheGroups: {
+        vendor: {
+          name: 'vendor',
+          chunks: 'initial',
+          priority: -10,
+          reuseExistingChunk: false,
+          test: /node_modules\/(.*)\.js/
+        }
+      }
 	},
 
 	module: {
@@ -90,9 +120,18 @@ module.exports = {
 		}),
 		new webpack.HotModuleReplacementPlugin(), //热加载插件
 		new webpack.optimize.OccurrenceOrderPlugin(), //为组件分配ID，通过这个插件webpack可以分析和优先考虑使用最多的模块，并为它们分配最小的ID
-		new MiniCssExtractPlugin({ //压缩css文件
-			filename: "[name].css",
-			chunkFilename: "[id].css"
-		})
 	],
+}
+if (env === 'production') {
+	config.plugins.push(
+		new MiniCssExtractPlugin({
+			filename: '[name].[hash].css',
+			chunkFilename: '[name].[contenthash].css',
+		}),
+		new OptimizeCSSPlugin({
+			cssProcessorOptions: {
+				safe: true,
+			}
+		})
+	);
 }
