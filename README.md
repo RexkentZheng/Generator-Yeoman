@@ -1,4 +1,4 @@
-[![NPM version](https://img.shields.io/npm/v/brick.js.svg?style=flat)](https://www.npmjs.com/package/generator-sfe)
+[![NPM version](https://img.shields.io/npm/v/generator-sfe.svg?style=flat)](https://www.npmjs.com/package/generator-sfe)
 # 基于Yeoman的脚手架工具
 ## 内容
 ### 包含eslint(airbnb),react,mbox,sass,antd
